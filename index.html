@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ДорогаВместе</title>
+    <title>АвтоСосед</title>
 
-    <!-- Leaflet: бесплатная библиотека карт -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Обязательный скрипт Telegram Mini Apps -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
@@ -47,8 +44,8 @@
 
         const map = L.map('map').setView([55.7558, 37.6173], 10);
 
-        L.tileLayer('https://core-renderer-tiles.maps.yandex.net/tiles?l=map&v=21.06.21&x={x}&y={y}&z={z}&scale=1&lang=ru_RU', {
-            attribution: '© Яндекс.Карты',
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap',
             maxZoom: 19
         }).addTo(map);
 
@@ -73,7 +70,7 @@
             const icon = p.type === 'help' ? redIcon : greenIcon;
             L.marker([p.lat, p.lng], { icon: icon })
                 .addTo(map)
-                .bindPopup(`<b>${p.type === 'help' ? '🆘 Нужна помощь' : '✅ Готов помочь'}</b><br>${p.text}`);
+                .bindPopup('<b>' + (p.type === 'help' ? '🆘 Нужна помощь' : '✅ Готов помочь') + '</b><br>' + p.text);
         });
 
         if (tg.requestLocation) {
