@@ -99,7 +99,8 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
-      margin-top: 12px;
+      margin-top: 16px;
+      margin-right: 12px;
       transition: background 0.2s;
     }
     .btn:hover { background: #1a7d2c; }
@@ -144,41 +145,40 @@
     <section id="presentation">
       <h2>Презентация (Web-альбом)</h2>
       <p>Мультимедиа-презентация о Platform V: история, архитектура, преимущества и применение.</p>
-      <!-- Вставьте сюда iframe вашей Google Презентации -->
+      
+      <!-- Встроенная презентация (формат embed) -->
       <div class="embed">
-        <!-- Замените ВАША_ССЫЛКА_НА_ПРЕЗЕНТАЦИЮ на реальную ссылку -->
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTa51Fnc3MOUdA9xu1NPIWQJUC5BgzL1R_olk8knneQapAZpq-jvYiNo3Ir6xUM0AEFJssatAQnLCTO/pub?start=false&loop=false&delayms=3000" 
+        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTa51Fnc3MOUdA9xu1NPIWQJUC5BgzL1R_olk8knneQapAZpq-jvYiNo3Ir6xUM0AEFJssatAQnLCTO/embed?start=false&loop=false&delayms=3000" 
+                frameborder="0" 
                 allowfullscreen="true" 
                 mozallowfullscreen="true" 
                 webkitallowfullscreen="true">
         </iframe>
       </div>
-      <p style="font-size:0.85rem; color:var(--gray); margin-top:8px;">Если презентация не отображается, <a href="#" target="_blank">откройте её по ссылке</a>.</p>
+      
+      <!-- Резервная кнопка, если iframe не загрузится -->
+      <p style="margin-top: 16px;">
+        <a href="https://docs.google.com/presentation/d/e/2PACX-1vTa51Fnc3MOUdA9xu1NPIWQJUC5BgzL1R_olk8knneQapAZpq-jvYiNo3Ir6xUM0AEFJssatAQnLCTO/pub?start=false&loop=false&delayms=3000" class="btn" target="_blank">Открыть презентацию в новой вкладке</a>
+      </p>
     </section>
 
     <section id="timeline">
       <h2>Лента времени</h2>
       <p>История развития Platform V и ключевые события.</p>
-      <!-- Вставьте iframe Timeline JS -->
-      <div class="embed">
-        <!-- Замените ВАША_ССЫЛКА_НА_ЛЕНТУ на ссылку из Timeline JS -->
-        <iframe src="ВАША_ССЫЛКА_НА_ЛЕНТУ" 
-                allowfullscreen="true">
-        </iframe>
+      <!-- ВСТАВЬТЕ СЮДА ВАШ IFRAME ОТ TIMELINE JS -->
+      <div class="placeholder">
+        Здесь будет лента времени.<br>
+        (Замените этот блок на iframe от Timeline JS)
       </div>
     </section>
 
     <section id="audioguide">
       <h2>Аудиогид</h2>
       <p>Аудиоэкскурсия по платформе Platform V: 6 локаций с иллюстрациями и звуком.</p>
-      <!-- Вставьте iframe или кнопку на izi.TRAVEL -->
       <div class="placeholder">
         Аудиогид будет добавлен после выполнения Задания 3.<br>
         Здесь появится встроенный плеер izi.TRAVEL или кнопка «Перейти к аудиогиду».
       </div>
-      <!-- Пример кнопки:
-      <a href="ССЫЛКА_НА_АУДИОГИД" class="btn" target="_blank">Открыть аудиогид</a>
-      -->
     </section>
 
     <section id="video">
@@ -188,16 +188,12 @@
         Видеокурс будет добавлен после выполнения Задания 5.<br>
         Здесь появится встроенный YouTube-плеер.
       </div>
-      <!-- Пример вставки YouTube:
-      <div class="embed">
-        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-      </div>
-      -->
     </section>
 
     <section id="blog">
       <h2>Блог</h2>
       <p>Ход выполнения квеста: распределение ролей, задания и результаты.</p>
+      <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШУ ГРУППУ ВК -->
       <a href="https://vk.ru/platformv_ib" class="btn" target="_blank">Перейти в группу ВКонтакте</a>
     </section>
 
