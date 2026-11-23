@@ -1,102 +1,212 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>АвтоСосед</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <style>
-        body { margin: 0; padding: 0; font-family: sans-serif; }
-        #map { height: 100vh; width: 100%; }
-
-        #report-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #e63946;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            z-index: 1000;
-            cursor: pointer;
-        }
-        #report-btn:active { background: #c1121f; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platform V — Квест «Отечественные ОС»</title>
+  <style>
+    :root {
+      --green: #21A038;
+      --dark: #1F2A24;
+      --light: #F4F7F5;
+      --gray: #6B7A72;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--green);
+      color: #fff;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    header h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    header p { font-size: 1.1rem; opacity: 0.95; }
+    .hashtags { margin-top: 12px; font-size: 0.9rem; opacity: 0.85; }
+    nav {
+      background: var(--dark);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    nav a:hover { background: var(--green); }
+    main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+    section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    section h2 {
+      color: var(--green);
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--light);
+      padding-bottom: 8px;
+    }
+    section p { margin-bottom: 12px; color: var(--dark); }
+    .embed {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: var(--light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      background: var(--light);
+      border: 2px dashed var(--gray);
+      border-radius: 8px;
+      color: var(--gray);
+      margin-top: 16px;
+      text-align: center;
+      padding: 16px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 12px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1a7d2c; }
+    footer {
+      background: var(--dark);
+      color: #ccc;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      section { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-    <div id="map"></div>
-    <button id="report-btn">🆘 Сообщить о проблеме</button>
+  <header>
+    <h1>Platform V — российская цифровая платформа</h1>
+    <p>Квест «Отечественные операционные системы»</p>
+    <div class="hashtags">#КвестОС #РУДН #КафедраИБ</div>
+  </header>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+  <nav>
+    <a href="#about">О платформе</a>
+    <a href="#presentation">Презентация</a>
+    <a href="#timeline">Лента времени</a>
+    <a href="#audioguide">Аудиогид</a>
+    <a href="#video">Видеокурс</a>
+    <a href="#blog">Блог</a>
+  </nav>
 
-        const map = L.map('map').setView([55.7558, 37.6173], 10);
+  <main>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap',
-            maxZoom: 19
-        }).addTo(map);
+    <section id="about">
+      <h2>О платформе Platform V</h2>
+      <p>Platform V — цифровая облачная платформа от СберТеха, включающая более 70 продуктов: от операционной системы и баз данных до инструментов разработки и сервисов безопасности. Платформа создавалась как фундамент цифровой трансформации Сбера, а с 2021 года доступна внешним заказчикам.</p>
+      <p>Продукты Platform V зарегистрированы в реестре российского ПО, обеспечивают импортонезависимость, надёжность (доступность 99,99%) и безопасность на всех уровнях ИТ-инфраструктуры.</p>
+    </section>
 
-        const testPoints = [
-            { lat: 55.7558, lng: 37.6173, type: 'help', text: 'Сел аккумулятор' },
-            { lat: 55.7600, lng: 37.6300, type: 'helper', text: 'Есть провода, готов помочь' },
-            { lat: 55.7400, lng: 37.6000, type: 'help', text: 'Кончился бензин' }
-        ];
+    <section id="presentation">
+      <h2>Презентация (Web-альбом)</h2>
+      <p>Мультимедиа-презентация о Platform V: история, архитектура, преимущества и применение.</p>
+      <!-- Вставьте сюда iframe вашей Google Презентации -->
+      <div class="embed">
+        <!-- Замените ВАША_ССЫЛКА_НА_ПРЕЗЕНТАЦИЮ на реальную ссылку -->
+        <iframe src="ВАША_ССЫЛКА_НА_ПРЕЗЕНТАЦИЮ" 
+                allowfullscreen="true" 
+                mozallowfullscreen="true" 
+                webkitallowfullscreen="true">
+        </iframe>
+      </div>
+      <p style="font-size:0.85rem; color:var(--gray); margin-top:8px;">Если презентация не отображается, <a href="#" target="_blank">откройте её по ссылке</a>.</p>
+    </section>
 
-        const redIcon = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
-        });
-        const greenIcon = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
-        });
+    <section id="timeline">
+      <h2>Лента времени</h2>
+      <p>История развития Platform V и ключевые события.</p>
+      <!-- Вставьте iframe Timeline JS -->
+      <div class="embed">
+        <!-- Замените ВАША_ССЫЛКА_НА_ЛЕНТУ на ссылку из Timeline JS -->
+        <iframe src="ВАША_ССЫЛКА_НА_ЛЕНТУ" 
+                allowfullscreen="true">
+        </iframe>
+      </div>
+    </section>
 
-        testPoints.forEach(p => {
-            const icon = p.type === 'help' ? redIcon : greenIcon;
-            L.marker([p.lat, p.lng], { icon: icon })
-                .addTo(map)
-                .bindPopup('<b>' + (p.type === 'help' ? '🆘 Нужна помощь' : '✅ Готов помочь') + '</b><br>' + p.text);
-        });
+    <section id="audioguide">
+      <h2>Аудиогид</h2>
+      <p>Аудиоэкскурсия по платформе Platform V: 6 локаций с иллюстрациями и звуком.</p>
+      <!-- Вставьте iframe или кнопку на izi.TRAVEL -->
+      <div class="placeholder">
+        Аудиогид будет добавлен после выполнения Задания 3.<br>
+        Здесь появится встроенный плеер izi.TRAVEL или кнопка «Перейти к аудиогиду».
+      </div>
+      <!-- Пример кнопки:
+      <a href="ССЫЛКА_НА_АУДИОГИД" class="btn" target="_blank">Открыть аудиогид</a>
+      -->
+    </section>
 
-        if (tg.requestLocation) {
-            tg.requestLocation((data) => {
-                if (data && data.latitude) {
-                    map.setView([data.latitude, data.longitude], 13);
-                    L.marker([data.latitude, data.longitude])
-                        .addTo(map)
-                        .bindPopup('📍 Вы здесь')
-                        .openPopup();
-                }
-            });
-        }
+    <section id="video">
+      <h2>Видеокурс</h2>
+      <p>Видеообзор или инструкция по работе с Platform V.</p>
+      <div class="placeholder">
+        Видеокурс будет добавлен после выполнения Задания 5.<br>
+        Здесь появится встроенный YouTube-плеер.
+      </div>
+      <!-- Пример вставки YouTube:
+      <div class="embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+      </div>
+      -->
+    </section>
 
-        document.getElementById('report-btn').addEventListener('click', () => {
-            const center = map.getCenter();
-            const payload = {
-                action: 'new_report',
-                lat: center.lat,
-                lng: center.lng,
-                text: 'Нужна помощь'
-            };
-            tg.sendData(JSON.stringify(payload));
-            tg.close();
-        });
-    </script>
+    <section id="blog">
+      <h2>Блог</h2>
+      <p>Ход выполнения квеста: распределение ролей, задания и результаты.</p>
+      <a href="ССЫЛКА_НА_ВАШУ_ГРУППУ_ВК" class="btn" target="_blank">Перейти в группу ВКонтакте</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Квест «Отечественные операционные системы» • Platform V • 2026</p>
+    <p>Источники: platformv.sbertech.ru, СберТех, TAdviser, CNews</p>
+  </footer>
 
 </body>
 </html>
